@@ -1,0 +1,62 @@
+{
+  "data": {
+    "node": {
+      "__typename": "Rule",
+      "id": "UlVMRXw2MTAxNzI=",
+      "description": "dsf",
+      "accessType": "MANAGE_ACCESS",
+      "status": "INACTIVE",
+      "combinedStatus": "INACTIVE",
+      "syncStatus": "NOT_SYNCED",
+      "createdBy": {
+        "id": "1640384a63de6000",
+        "displayName": "Anubhav Gupta"
+      },
+      "createdOn": "1674110164697",
+      "updatedBy": {
+        "id": "1640384a63de6000",
+        "displayName": "Anubhav Gupta"
+      },
+      "updatedOn": "1674110164982",
+      "lastExecutedOn": "0",
+      "condition": {
+        "expressionType": "AND",
+        "expressions": [
+          {
+            "objectId": "1234",
+            "operatorType": "EQ",
+            "dimensionName": "StageName",
+            "dimensionValue": "Starting",
+            "dimensionType": "STRING"
+          },
+          {
+            "objectId": "5678",
+            "operatorType": "GT",
+            "dimensionName": "SomePercentageTypeAttribute",
+            "dimensionValue": "30",
+            "dimensionType": "DOUBLE"
+          }
+        ]
+      },
+      "action": {
+        "ACTION_RETRIES": "3",
+        "type": "ADD_TO_MODULE",
+        "addedType": "MANUAL",
+        "values": [
+          {
+            "type": "MODULE",
+            "values": ["1"]
+          },
+          {
+            "type": "ASSETS_WITH_ATTRIBUTE",
+            "values": ["1"]
+          },
+          {
+            "type": "ASSET",
+            "values": ["1"]
+          }
+        ]
+      }
+    }
+  }
+}
