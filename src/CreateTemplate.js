@@ -441,7 +441,8 @@ const Create = ({rule, updaterule, rule_type}) => {
                             operatorType: obj.operatorType,
                             dimensionName: obj.dimensionName,
                             dimensionValue: obj.dimensionValue,
-                            dimensionType: obj.dimensionType
+                            dimensionType: obj.dimensionType,
+                            expressionParent: obj.expressionParent
                         };
                     })
                 },

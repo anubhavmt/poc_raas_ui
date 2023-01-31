@@ -1,11 +1,12 @@
-import { StyledListBlock, StyledListPopover } from './style';
+import {StyledListBlock, StyledListPopover} from './style';
 import EllipsisTooltip from '@mindtickle/ellipsis-tooltip';
 import Grid from '@mindtickle/grid';
+
 export const POPOVER_WIDTH = {
     width: '393px',
 };
 
-const { Row } = Grid;
+const {Row} = Grid;
 
 
 const renderContent = (item, i) => (
@@ -17,17 +18,16 @@ const renderContent = (item, i) => (
 );
 
 
+function TableItemList(props) {
 
-function TableItemList(props){
-
-    const { contents, moreItemConfig:{viewMoreText, renderMoreContent} } = props;
+    const {contents, moreItemConfig: {viewMoreText, renderMoreContent}} = props;
 
 
     let contentsToDisplay = contents, contentsOnPopover = [];
 
     if (contents.length > 1) {
-      contentsToDisplay = contents.slice(0,1);
-      contentsOnPopover = contents.slice(0);
+        contentsToDisplay = contents.slice(0, 1);
+        contentsOnPopover = contents.slice(0);
     }
 
     return (
@@ -38,7 +38,7 @@ function TableItemList(props){
                 <StyledListPopover
                     overlayStyle={POPOVER_WIDTH}
                     title={contentsOnPopover.map(renderMoreContent)}
-                    placement={'bottomLeft'}
+                    placement={'bottomRight'}
                 >
                     <div className="moreEntitiesWrapper">
               <span className="moreEntities">

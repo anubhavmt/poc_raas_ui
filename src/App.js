@@ -136,6 +136,12 @@ export default function App() {
 
     return (
         <div className="App">
+
+            ...........................Table condition show......................................................
+            <TableItemList contents={listOfComponentsToDisplay} moreItemConfig={moreItemConfig}/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
             {fetchRule ? "MANAGE RULE" : "CREATE RULE"}
             <br/><br/>
             <br/><br/>
@@ -152,10 +158,6 @@ export default function App() {
             <Create rule={rule} updaterule={updaterule} rule_type={rule_type}/>
 
 
-            <br/><br/><br/>
-            ...........................Table condition show......................................................
-            <br/><br/>
-            <TableItemList contents={listOfComponentsToDisplay} moreItemConfig={moreItemConfig}/>
         </div>
     );
 }

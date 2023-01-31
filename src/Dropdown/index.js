@@ -1,6 +1,5 @@
 // Reusable Dropdown
 import React from 'react'
-import './style'
 
 class Dropdown extends React.Component {
 
