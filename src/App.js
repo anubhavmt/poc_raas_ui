@@ -25,7 +25,8 @@ export function getrule(curRule, ruleType) {
                         operatorType: obj.operatorType,
                         dimensionName: obj.dimensionName,
                         dimensionValue: obj.dimensionValue,
-                        dimensionType: obj.dimensionType
+                        dimensionType: obj.dimensionType,
+                        expressionParent: obj.expressionParent
                     };
                 })
             },
@@ -39,6 +40,9 @@ export function getrule(curRule, ruleType) {
                         values: obj.values
                     };
                 })
+            },
+            context: {
+                ruleType: response.data.node.context.ruleType
             }
         };
     } else {
@@ -51,7 +55,7 @@ export function getrule(curRule, ruleType) {
                 values: [{id: "34"}]
             },
             context: {
-                ruleType: ruleType ? ruleType : Object.keys(config)[0]
+                ruleType: Object.keys(config)[0]
             }
         };
     }
@@ -104,9 +108,9 @@ export default function App() {
     };
 
 
-    let fetchRule = null;
+    let fetchRule = "null";
     const nowrule = getrule(fetchRule);
-
+    const [rule, updaterule] = useState(nowrule);
     const [rule_type, setruleType] = useState(nowrule.context.ruleType)
     const Ruleslist = Object.keys(config);
 
@@ -126,7 +130,7 @@ export default function App() {
         }
 
         setruleType(value);
-        // updateRule(obj);
+        updaterule(obj);
 
     }
 
@@ -135,26 +139,23 @@ export default function App() {
             {fetchRule ? "MANAGE RULE" : "CREATE RULE"}
             <br/><br/>
             <br/><br/>
-            {fetchRule ? '' :
-                <>
-                    <div className='parent'>
-                        Change rule type
-                        <Dropdown selectValue={rule_type} filterData={Ruleslist}
-                                  setFilteredData={ruletypeChange}/>
-                    </div>
-                    <br/><br/><br/>
-                </>
-            }
-            {rule_type == 'learner_rules' &&
-                <Create nowrule={nowrule} rule_type={rule_type}/>}
-            {rule_type == 'opportunity_rules' &&
-                <Create nowrule={nowrule} rule_type={rule_type}/>}
-              
 
-            {/*<br /><br /><br />*/}
-            {/*...........................Table condition show......................................................*/}
-            {/*<br /><br />*/}
-            {/*<TableItemList contents={listOfComponentsToDisplay} moreItemConfig={moreItemConfig} />*/}
+
+            <div className='parent'>
+                Change rule type
+                <Dropdown selectValue={rule_type} filterData={Ruleslist}
+                          setFilteredData={ruletypeChange}/>
+            </div>
+            <br/><br/><br/>
+
+
+            <Create rule={rule} updaterule={updaterule} rule_type={rule_type}/>
+
+
+            <br/><br/><br/>
+            ...........................Table condition show......................................................
+            <br/><br/>
+            <TableItemList contents={listOfComponentsToDisplay} moreItemConfig={moreItemConfig}/>
         </div>
     );
 }

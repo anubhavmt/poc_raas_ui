@@ -27,14 +27,16 @@
             "operatorType": "EQ",
             "dimensionName": "StageName",
             "dimensionValue": "Starting",
-            "dimensionType": "STRING"
+            "dimensionType": "STRING",
+            "expressionParent": "opportunity"
           },
           {
             "objectId": "5678",
             "operatorType": "GT",
             "dimensionName": "SomePercentageTypeAttribute",
             "dimensionValue": "30",
-            "dimensionType": "DOUBLE"
+            "dimensionType": "DOUBLE",
+            "expressionParent": "opportunity"
           }
         ]
       },
@@ -62,6 +64,9 @@
             ]
           }
         ]
+      },
+      "context": {
+        "ruleType": "opportunity_rules"
       }
     }
   }

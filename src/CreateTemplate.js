@@ -92,13 +92,10 @@ function MySelectCondition({
 
                            }) {
 
-    const [value, updateValue] = useState(expression);
-
-
     function changeParent(val) {
 
         const newexpression = {
-            id: value.id,
+            id: expression.id,
             objectId: undefined,
             operatorType: undefined,
             dimensionName: undefined,
@@ -106,94 +103,90 @@ function MySelectCondition({
             dimensionType: undefined,
             expressionParent: val.target.value
         };
-        updateValue(newexpression);
         updateexpression(newexpression);
     }
 
     function change(val) {
         const type =
-            config[rule_type].objects[value.expressionParent][val.target.value]
+            config[rule_type].objects[expression.expressionParent][val.target.value]
                 .attributeType;
 
         const newexpression = {
-            id: value.id,
+            id: expression.id,
             objectId: undefined,
             operatorType: undefined,
             dimensionName: val.target.value,
             dimensionValue: undefined,
             dimensionType: type,
-            expressionParent: value.expressionParent
+            expressionParent: expression.expressionParent
         };
-        updateValue(newexpression);
         updateexpression(newexpression);
     }
 
     function changeoperator(val) {
         const newexpression = {
-            id: value.id,
-            objectId: value.objectId,
+            id: expression.id,
+            objectId: expression.objectId,
             operatorType: val.target.value,
-            dimensionName: value.dimensionName,
-            dimensionValue: value.dimensionValue,
-            dimensionType: value.dimensionType,
-            expressionParent: value.expressionParent
+            dimensionName: expression.dimensionName,
+            dimensionValue: expression.dimensionValue,
+            dimensionType: expression.dimensionType,
+            expressionParent: expression.expressionParent
         };
-        updateValue(newexpression);
         updateexpression(newexpression);
     }
 
     function changeValue(val) {
         const valuenew = {
-            id: value.id,
-            objectId: value.objectId,
-            operatorType: value.operatorType,
-            dimensionName: value.dimensionName,
+            id: expression.id,
+            objectId: expression.objectId,
+            operatorType: expression.operatorType,
+            dimensionName: expression.dimensionName,
             dimensionValue: val,
-            dimensionType: value.dimensionType,
-            expressionParent: value.expressionParent
+            dimensionType: expression.dimensionType,
+            expressionParent: expression.expressionParent
         };
-        updateValue(valuenew);
         updateexpression(valuenew);
     }
 
     function changeObjectid(val) {
         const valuenew = {
-            id: value.id,
+            id: expression.id,
             objectId: val.target.value,
-            operatorType: value.operatorType,
-            dimensionName: value.dimensionName,
-            dimensionValue: value.dimensionValue,
-            dimensionType: value.dimensionType,
-            expressionParent: value.expressionParent
+            operatorType: expression.operatorType,
+            dimensionName: expression.dimensionName,
+            dimensionValue: expression.dimensionValue,
+            dimensionType: expression.dimensionType,
+            expressionParent: expression.expressionParent
         };
-        updateValue(valuenew);
         updateexpression(valuenew);
     }
 
     return (
         <div>
 
-            {value?.expressionParent ?? ""}&ensp;
-            <select id="lang" onChange={changeParent} value={value?.expressionParent ?? ""}>
+            {expression?.expressionParent ?? ""}&ensp;
+            <select id="lang" onChange={changeParent} value={expression?.expressionParent ?? ""}>
                 <option hidden>Select your option</option>
                 <ListConfig list_attribute={Object.keys(config[rule_type].objects)}/>
             </select>
             &ensp;
-            {!!value.expressionParent ? (
+            {!!expression.expressionParent ? (
                 <>
-                    {value?.dimensionName ?? ""}&ensp;
-                    <select id="lang" onChange={change} value={value?.dimensionName ?? ""}>
+                    {expression?.dimensionName ?? ""}&ensp;
+                    <select id="lang" onChange={change} value={expression?.dimensionName ?? ""}>
                         <option hidden>Select your option</option>
-                        <ListConfig list_attribute={Object.keys(config[rule_type].objects[value.expressionParent])}/>
+                        <ListConfig
+                            list_attribute={Object.keys(config[rule_type].objects[expression.expressionParent])}/>
                     </select>
                     &ensp;</>) : ''}
-            {(value?.dimensionName ?? "") !== "" ? (
+            {(expression?.dimensionName ?? "") !== "" ? (
                 <>
-                    {value?.objectId ?? ""}
+                    {expression?.objectId ?? ""}
                     <select
                         id="lang"
                         onChange={changeObjectid}
-                        value={value?.objectId ?? ""}
+                        value={expression?.objectId ?? ""}
                     >
                         <option hidden>Select your option</option>
                         <option value={"1234"}> {"1234"} </option>
@@ -204,17 +197,18 @@ function MySelectCondition({
                 ""
             )}
             &ensp; &ensp;
-            {(value?.dimensionName ?? "") !== "" ? (
+            {(expression?.dimensionName ?? "") !== "" ? (
                 <>
                     is &ensp;
-                    {value.operatorType}
+                    {expression.operatorType}
                     <select
                         id="opera"
                         onChange={changeoperator}
-                        value={value.operatorType}
+                        value={expression.operatorType}
                     >
                         <option hidden>Select your option</option>
-                        <Operator expressionParent={value.expressionParent} selectedValue={value.dimensionName}
+                        <Operator expressionParent={expression.expressionParent}
+                                  selectedValue={expression.dimensionName}
                                   rule_type={rule_type}/>
                     </select>
                 </>
@@ -222,12 +216,12 @@ function MySelectCondition({
                 ""
             )}
             &ensp;
-            {(value?.operatorType ?? "") !== "" ? (
+            {(expression?.operatorType ?? "") !== "" ? (
                 <AttributeValue
-                    selectedValue={value?.dimensionName}
+                    selectedValue={expression?.dimensionName}
                     changeValue={changeValue}
-                    expressionParent={value.expressionParent}
-                    alreadyvalue={value?.dimensionValue ?? ""}
+                    expressionParent={expression.expressionParent}
+                    alreadyvalue={expression?.dimensionValue ?? ""}
                     rule_type={rule_type}
                 />
             ) : (
@@ -262,9 +256,7 @@ function Typeofcondition({action, updateaction, rule_type}) {
 }
 
 function MySelectAction({action, updateactions, rule_type}) {
-    const [id, updateid] = useState([]);
 
-    const [actionhere, updateactionhere] = useState(action);
 
     function updateActionType(newactiontype) {
         const newtype = {
@@ -272,26 +264,25 @@ function MySelectAction({action, updateactions, rule_type}) {
             type: newactiontype,
             values: []
         };
-        updateactionhere(newtype);
+
         updateactions(newtype);
     }
 
-    function updateActionValue(action) {
-        const actionvalues = action.map((obj) => obj.id);
+    function updateActionValue(acti) {
+        const actionvalues = acti.map((obj) => obj.id);
 
         const newaction = {
-            id: actionhere.id,
-            type: actionhere.type,
+            id: action.id,
+            type: action.type,
             values: actionvalues
         };
 
-        updateactionhere(newaction);
         updateactions(newaction);
     }
 
     let selectedvaluess = [];
-    if ((actionhere?.type ?? "") !== "") {
-        selectedvaluess = actionhere.values.map((obj) => {
+    if ((action?.type ?? "") !== "") {
+        selectedvaluess = action.values.map((obj) => {
             if (obj === "1") {
                 return {
                     name: "Option 1️⃣",
@@ -307,9 +298,9 @@ function MySelectAction({action, updateactions, rule_type}) {
     }
     return (
         <>
-            <Typeofcondition action={actionhere} updateaction={updateActionType} rule_type={rule_type}/>
+            <Typeofcondition action={action} updateaction={updateActionType} rule_type={rule_type}/>
             &ensp;
-            {(actionhere?.type ?? "") !== "" ? (
+            {(action?.type ?? "") !== "" ? (
                 <Multiselect
                     options={[
                         {name: "Option 1️⃣", id: 1},
@@ -330,14 +321,10 @@ function MySelectAction({action, updateactions, rule_type}) {
 }
 
 
-const Create = ({nowrule, rule_type}) => {
-
-    const [rule, updaterule] = useState(nowrule);
+const Create = ({rule, updaterule, rule_type}) => {
 
 
-    const [expressions, updateexpression] = useState(rule.condition.expression);
-    const [actions, updateactions] = useState(rule.action.values);
-    const [expressiontype, updateexpressiontype] = useState("AND");
+    const expressiontype = rule.condition.expressiontype;
 
 
     function updateRule(Rule) {
@@ -345,10 +332,9 @@ const Create = ({nowrule, rule_type}) => {
     }
 
     function updateActions(action, index) {
-        let actionIndex = actions;
+        let actionIndex = rule.action.values;
         actionIndex[index] = action;
 
-        updateactions(actionIndex);
         updateRule((preRule) => {
             return {
                 condition: {
@@ -356,7 +342,7 @@ const Create = ({nowrule, rule_type}) => {
                     expression: preRule.condition.expression
                 },
                 action: {
-                    values: actions
+                    values: actionIndex
                 },
                 context: {
                     ruleType: preRule.context.ruleType
@@ -366,10 +352,9 @@ const Create = ({nowrule, rule_type}) => {
     }
 
     function updateoneexpression(expression, index) {
-        let expressionIndex = expressions;
+        let expressionIndex = rule.condition.expression;
         expressionIndex[index] = expression;
 
-        updateexpression(expressionIndex);
         updateRule((preRule) => {
             return {
                 condition: {
@@ -387,7 +372,6 @@ const Create = ({nowrule, rule_type}) => {
     }
 
     function updateExpressionType(type) {
-        updateexpressiontype(type);
         updateRule((preRule) => {
             return {
                 condition: {
@@ -406,15 +390,14 @@ const Create = ({nowrule, rule_type}) => {
 
     function onAddExpression() {
         const newex = {id: Math.random()};
-        let list = expressions;
+        let list = rule.condition.expression;
         list.push(newex);
 
-        updateexpression(list);
         updateRule((preRule) => {
             return {
                 condition: {
                     expressiontype: preRule.condition.expressiontype,
-                    expression: expressions
+                    expression: list
                 },
                 action: {
                     values: preRule.action.values
@@ -428,10 +411,9 @@ const Create = ({nowrule, rule_type}) => {
 
     function onAddAction() {
         const newex = {id: Math.random()};
-        let list = actions;
+        let list = rule.action.values;
         list.push(newex);
 
-        updateActions(list);
         updateRule((preRule) => {
             return {
                 condition: {
@@ -499,7 +481,7 @@ const Create = ({nowrule, rule_type}) => {
             <p>
                 .................Condition........................................................................
             </p>
-            {expressions.map((expression, index) => (
+            {rule.condition.expression.map((expression, index) => (
                 <MySelectCondition
                     expression={expression}
                     expressiontype={expressiontype}
@@ -517,7 +499,7 @@ const Create = ({nowrule, rule_type}) => {
                 <br/><br/><br/>
                 ..................Action.............................................................................
             </p>
-            {actions.map((action, index) => (
+            {rule.action.values.map((action, index) => (
                 <MySelectAction
                     rule_type={rule_type}
                     action={action}
