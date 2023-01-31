@@ -45,15 +45,21 @@
         "values": [
           {
             "type": "MODULE",
-            "values": ["1"]
+            "values": [
+              "1"
+            ]
           },
           {
             "type": "ASSETS_WITH_ATTRIBUTE",
-            "values": ["1"]
+            "values": [
+              "1"
+            ]
           },
           {
             "type": "ASSET",
-            "values": ["1"]
+            "values": [
+              "1"
+            ]
           }
         ]
       }

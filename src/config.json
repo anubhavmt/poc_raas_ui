@@ -1,4 +1,100 @@
 {
+  "learner_rules": {
+    "objects": {
+      "certification": {
+        "Certification on module": {
+          "attribute": "Certification on module",
+          "attributeType": "STRING",
+          "object": {
+            "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
+          },
+          "validator": {
+            "operator": [
+              "EQ"
+            ],
+            "value": {
+              "Type": "Enum",
+              "EnumValues": [
+                {
+                  "value": "Received",
+                  "text": "Received"
+                },
+                {
+                  "value": "NotReceived",
+                  "text": "Not Received"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "module": {
+        "Status": {
+          "attribute": "Status",
+          "attributeType": "STRING",
+          "object": {
+            "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
+          },
+          "validator": {
+            "operator": [
+              "EQ"
+            ],
+            "value": {
+              "Type": "Enum",
+              "EnumValues": [
+                {
+                  "value": "Completed",
+                  "text": "Completed"
+                },
+                {
+                  "value": "InProgress",
+                  "text": "In Progress"
+                },
+                {
+                  "value": "NotStarted",
+                  "text": "Not Started"
+                }
+              ]
+            }
+          }
+        },
+        "Score": {
+          "attribute": "Score",
+          "attributeType": "DOUBLE",
+          "object": {
+            "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
+          },
+          "validator": {
+            "operator": [
+              "EQ",
+              "GT",
+              "LT"
+            ],
+            "value": {
+              "Type": "NoRange",
+              "RangeValues": {
+                "min": 0,
+                "max": 100,
+                "step": 10
+              }
+            }
+          }
+        }
+      }
+    },
+    "actions": [
+      {
+        "actionOn": "MODULE",
+        "type": [
+          "ADD_TO_MODULE",
+          "REMOVE_FROM_MODULE"
+        ],
+        "object": {
+          "apiUrl": "/get-rule-action/<CONTEXT>/<OBJECT_TYPE>/<ACTION_ON>/"
+        }
+      }
+    ]
+  },
   "opportunity_rules": {
     "objects": {
       "opportunity": {
@@ -9,7 +105,9 @@
             "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
           },
           "validator": {
-            "operator": ["choose EQ option", "EQ"],
+            "operator": [
+              "EQ"
+            ],
             "value": {
               "Type": "Enum",
               "EnumValues": [
@@ -25,29 +123,6 @@
             }
           }
         },
-        "StageXYZboolean": {
-          "attribute": "StageXYZboolean",
-          "attributeType": "boolean",
-          "object": {
-            "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
-          },
-          "validator": {
-            "operator": ["choose EQ option", "EQ"],
-            "value": {
-              "Type": "Enum",
-              "EnumValues": [
-                {
-                  "value": "true",
-                  "text": "Exist"
-                },
-                {
-                  "value": "false",
-                  "text": "Not exist"
-                }
-              ]
-            }
-          }
-        },
         "SomePercentageTypeAttribute": {
           "attribute": "SomePercentageTypeAttribute",
           "attributeType": "DOUBLE",
@@ -55,7 +130,11 @@
             "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
           },
           "validator": {
-            "operator": ["EQ", "GT", "LT"],
+            "operator": [
+              "EQ",
+              "GT",
+              "LT"
+            ],
             "value": {
               "Type": "NoRange",
               "RangeValues": {
@@ -65,58 +144,36 @@
               }
             }
           }
-        },
-        "abcdef": {
-          "attribute": "abcdef",
-          "attributeType": "DOUBLE",
-          "object": {
-            "apiUrl": "/get-rule-object/<CONTEXT>/<OBJECT_TYPE>/<ATTRIBUTE>/"
-          },
-          "validator": {
-            "operator": ["choose EQ option", "EQ"],
-            "value": {
-              "Type": "Enum",
-              "EnumValues": [
-                {
-                  "value": "trfdsfue",
-                  "text": "abcdeff"
-                },
-                {
-                  "value": "fdsfsadalse",
-                  "text": "fsdfasdfsd"
-                }
-              ]
-            }
-          }
         }
-
       }
     },
     "actions": [
       {
         "actionOn": "MODULE",
-        "type": ["ADD_TO_MODULE", "REMOVE_FROM_MODULE"],
+        "type": [
+          "ADD_TO_MODULE",
+          "REMOVE_FROM_MODULE"
+        ],
         "object": {
           "apiUrl": "/get-rule-action/<CONTEXT>/<OBJECT_TYPE>/<ACTION_ON>/"
         }
       },
       {
         "actionOn": "ASSET",
-        "type": ["ADD_TO_MODULE", "REMOVE_FROM_MODULE"],
+        "type": [
+          "ADD_TO_MODULE",
+          "REMOVE_FROM_MODULE"
+        ],
         "object": {
           "apiUrl": "/get-rule-action/<CONTEXT>/<OBJECT_TYPE>/<ACTION_ON>/"
         }
       },
       {
         "actionOn": "ASSETS_WITH_ATTRIBUTE",
-        "type": ["ADD_TO_MODULE", "REMOVE_FROM_MODULE"],
-        "object": {
-          "apiUrl": "/get-rule-action-asset/<CONTEXT>/<OBJECT_TYPE>/<ACTION_ON>/"
-        }
-      },
-      {
-        "actionOn": "ASSETS_WITH_XX",
-        "type": ["ADD_TO_MODULE", "REMOVE_FROM_MODULE"],
+        "type": [
+          "ADD_TO_MODULE",
+          "REMOVE_FROM_MODULE"
+        ],
         "object": {
           "apiUrl": "/get-rule-action-asset/<CONTEXT>/<OBJECT_TYPE>/<ACTION_ON>/"
         }
