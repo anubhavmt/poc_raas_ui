@@ -28,7 +28,7 @@
             "dimensionName": "StageName",
             "dimensionValue": "Starting",
             "dimensionType": "STRING",
-            "expressionParent": "opportunity"
+            "objectType": "opportunity"
           },
           {
             "objectId": "5678",
@@ -36,7 +36,7 @@
             "dimensionName": "SomePercentageTypeAttribute",
             "dimensionValue": "30",
             "dimensionType": "DOUBLE",
-            "expressionParent": "opportunity"
+            "objectType": "opportunity"
           }
         ]
       },

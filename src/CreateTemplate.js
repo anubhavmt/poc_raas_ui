@@ -15,8 +15,8 @@ function ListConfig({list_attribute}) {
     return element;
 }
 
-function Operator({selectedValue, rule_type, expressionParent}) {
-    const exconfig = config[rule_type].objects[expressionParent][selectedValue];
+function Operator({selectedValue, rule_type, objectType}) {
+    const exconfig = config[rule_type].objects[objectType][selectedValue];
 
     if (exconfig) {
         let operator = exconfig["validator"]["operator"].map((value) => (
@@ -30,8 +30,8 @@ function Operator({selectedValue, rule_type, expressionParent}) {
     return "";
 }
 
-function AttributeValue({selectedValue, changeValue, alreadyvalue, rule_type, expressionParent}) {
-    const exconfig = config[rule_type].objects[expressionParent][selectedValue];
+function AttributeValue({selectedValue, changeValue, alreadyvalue, rule_type, objectType}) {
+    const exconfig = config[rule_type].objects[objectType][selectedValue];
     const [value, updatevalue] = useState(alreadyvalue);
 
     function updateValue(val) {
@@ -101,14 +101,14 @@ function MySelectCondition({
             dimensionName: undefined,
             dimensionValue: undefined,
             dimensionType: undefined,
-            expressionParent: val.target.value
+            objectType: val.target.value
         };
         updateexpression(newexpression);
     }
 
     function change(val) {
         const type =
-            config[rule_type].objects[expression.expressionParent][val.target.value]
+            config[rule_type].objects[expression.objectType][val.target.value]
                 .attributeType;
 
         const newexpression = {
@@ -118,7 +118,7 @@ function MySelectCondition({
             dimensionName: val.target.value,
             dimensionValue: undefined,
             dimensionType: type,
-            expressionParent: expression.expressionParent
+            objectType: expression.objectType
         };
         updateexpression(newexpression);
     }
@@ -131,7 +131,7 @@ function MySelectCondition({
             dimensionName: expression.dimensionName,
             dimensionValue: expression.dimensionValue,
             dimensionType: expression.dimensionType,
-            expressionParent: expression.expressionParent
+            objectType: expression.objectType
         };
         updateexpression(newexpression);
     }
@@ -144,7 +144,7 @@ function MySelectCondition({
             dimensionName: expression.dimensionName,
             dimensionValue: val,
             dimensionType: expression.dimensionType,
-            expressionParent: expression.expressionParent
+            objectType: expression.objectType
         };
         updateexpression(valuenew);
     }
@@ -157,7 +157,7 @@ function MySelectCondition({
             dimensionName: expression.dimensionName,
             dimensionValue: expression.dimensionValue,
             dimensionType: expression.dimensionType,
-            expressionParent: expression.expressionParent
+            objectType: expression.objectType
         };
         updateexpression(valuenew);
     }
@@ -165,19 +165,19 @@ function MySelectCondition({
     return (
         <div>
 
-            {expression?.expressionParent ?? ""}&ensp;
-            <select id="lang" onChange={changeParent} value={expression?.expressionParent ?? ""}>
+            {expression?.objectType ?? ""}&ensp;
+            <select id="lang" onChange={changeParent} value={expression?.objectType ?? ""}>
                 <option hidden>Select your option</option>
                 <ListConfig list_attribute={Object.keys(config[rule_type].objects)}/>
             </select>
             &ensp;
-            {!!expression.expressionParent ? (
+            {!!expression.objectType ? (
                 <>
                     {expression?.dimensionName ?? ""}&ensp;
                     <select id="lang" onChange={change} value={expression?.dimensionName ?? ""}>
                         <option hidden>Select your option</option>
                         <ListConfig
-                            list_attribute={Object.keys(config[rule_type].objects[expression.expressionParent])}/>
+                            list_attribute={Object.keys(config[rule_type].objects[expression.objectType])}/>
                     </select>
                     &ensp;</>) : ''}
             {(expression?.dimensionName ?? "") !== "" ? (
@@ -207,7 +207,7 @@ function MySelectCondition({
                         value={expression.operatorType}
                     >
                         <option hidden>Select your option</option>
-                        <Operator expressionParent={expression.expressionParent}
+                        <Operator objectType={expression.objectType}
                                   selectedValue={expression.dimensionName}
                                   rule_type={rule_type}/>
                     </select>
@@ -220,7 +220,7 @@ function MySelectCondition({
                 <AttributeValue
                     selectedValue={expression?.dimensionName}
                     changeValue={changeValue}
-                    expressionParent={expression.expressionParent}
+                    objectType={expression.objectType}
                     alreadyvalue={expression?.dimensionValue ?? ""}
                     rule_type={rule_type}
                 />
@@ -442,7 +442,7 @@ const Create = ({rule, updaterule, rule_type}) => {
                             dimensionName: obj.dimensionName,
                             dimensionValue: obj.dimensionValue,
                             dimensionType: obj.dimensionType,
-                            expressionParent: obj.expressionParent
+                            objectType: obj.objectType
                         };
                     })
                 },

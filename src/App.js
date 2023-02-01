@@ -26,7 +26,7 @@ export function getrule(curRule, ruleType) {
                         dimensionName: obj.dimensionName,
                         dimensionValue: obj.dimensionValue,
                         dimensionType: obj.dimensionType,
-                        expressionParent: obj.expressionParent
+                        objectType: obj.objectType
                     };
                 })
             },
@@ -70,7 +70,7 @@ export default function App() {
                                                            operatorType,
                                                            dimensionName,
                                                            dimensionValue,
-                                                           dimensionType
+                                                           dimensionType, objectType
                                                        }, index) => {
 
             return (
@@ -81,6 +81,7 @@ export default function App() {
                     dimensionValue={dimensionValue}
                     dimensionType={dimensionType}
                     objectId={objectId}
+                    objectType={objectType}
                 />)
         })
 
@@ -108,7 +109,7 @@ export default function App() {
     };
 
 
-    let fetchRule = "null";
+    let fetchRule = null;
     const nowrule = getrule(fetchRule);
     const [rule, updaterule] = useState(nowrule);
     const [rule_type, setruleType] = useState(nowrule.context.ruleType)

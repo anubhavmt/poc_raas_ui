@@ -25,6 +25,7 @@ const StyledModuleLabel = styled.div`
     &:hover {
       border-bottom: 1px dashed ${theme.colors.SHARK};
     }
+
     .midText {
       vertical-align: middle;
       padding-left: 6px;
@@ -52,37 +53,40 @@ const StyledModuleLabel = styled.div`
 const ModuleLabelLayout = ({
 
                                objectId, operatorType, dimensionName, dimensionValue, dimensionType
-}) => {
-  const exconfig = config.opportunity_rules.objects.opportunity[dimensionName];
+                               , objectType
+                           }) => {
+    const exconfig = config.opportunity_rules.objects.opportunity[dimensionName];
 
-  if(!!exconfig == false){
-      return (<p>No conditions</p>)
-  }
-  const validatortype=exconfig.validator.value.Type;
+    if (!!exconfig == false) {
+        return (<p>No conditions</p>)
+    }
+    const validatortype = exconfig.validator.value.Type;
 
-  let postText = '';
-  if(validatortype=='Enum'){
-      postText=dimensionValue
-  }else{
-      postText= operatorType + " than " + dimensionValue
-  }
-  return (
-    <StyledModuleLabel className="moduleLabel">
-      <ModuleIcon moduleType={'ILT'} className="moduleIcon" />
-        <span>{dimensionName}</span>
-        &nbsp;
-        <span>of</span>
-        &nbsp;
-        <span><b>{objectId}</b></span>
-        &nbsp;
-        <span> is</span>
-        &nbsp;
+    let postText = '';
+    if (validatortype == 'Enum') {
+        postText = dimensionValue
+    } else {
+        postText = operatorType + " than " + dimensionValue
+    }
+    return (
+        <StyledModuleLabel className="moduleLabel">
+            <ModuleIcon moduleType={'ILT'} className="moduleIcon"/>
+            <span>{dimensionName}</span>
+            &nbsp;
+            <span>of</span>
+            &nbsp;
+            <span>{objectType}</span>
+            &nbsp;
+            <span><b>{objectId}</b></span>
+            &nbsp;
+            <span> is</span>
+            &nbsp;
 
-      <EllipsisTooltip title={`${postText}`} getPopupContainer={getpopoverRelativeToBody}>
-        {`${postText}`}
-      </EllipsisTooltip>
-    </StyledModuleLabel>
-  );
+            <EllipsisTooltip title={`${postText}`} getPopupContainer={getpopoverRelativeToBody}>
+                {`${postText}`}
+            </EllipsisTooltip>
+        </StyledModuleLabel>
+    );
 };
 
 export default ModuleLabelLayout;
