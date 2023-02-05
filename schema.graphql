@@ -1,0 +1,123 @@
+enum ModuleType {
+    COURSE
+    UPDATE
+    MISSION
+    ASSESSMENT
+    COACHING
+    CHECKLIST
+    ILT
+    VOICE_OVER_PPT_COACHING
+    VIDEO_PITCH_COACHING
+    TASK_EVALUATION_COACHING
+    SCREEN_CAPTURE_COACHING
+    ONE_TO_ONE_COACHING
+    REINFORCEMENT
+    COMPETENCY_ASSESSMENT
+}
+
+enum ListModuleSortField {
+    MODULE_NAME
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: ID
+    hasPreviousPage: Boolean
+    startCursor: ID
+}
+
+interface Node {
+    id: ID!
+}
+
+
+interface Edge {
+    cursor: ID
+    node: Node
+}
+
+
+
+interface PaginatedConnection {
+    totalCount: Int
+    edges: [Edge]
+    pageInfo: PageInfo
+}
+
+
+type ModuleEdge implements Edge {
+    cursor: ID
+    node: Module
+}
+
+enum ModuleState {
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+    DELETED
+    NOT_FOUND
+}
+
+enum GQLModuleRelevance {
+    NONE
+    OPT
+    REQ
+    DEFAULT
+}
+
+type Series implements Node {
+    id: ID!
+    name: String
+    objectStatus: ObjectStatus!
+    milestones: [Milestone]
+    description: String
+}
+
+type Milestone {
+    id: ID!
+    desc: String
+    name: String
+    seriesId: String!
+}
+
+
+enum ObjectStatus {
+    FOUND
+    NOT_FOUND
+}
+
+
+type Module implements Node {
+    id: ID!
+    type: ModuleType
+    name: String
+    description: String
+    state: ModuleState!
+    maxScore: Int
+    parentList: [Series]
+    moduleRelevance: GQLModuleRelevance
+}
+
+
+type ModuleList implements PaginatedConnection {
+    edges: [ModuleEdge]
+    totalCount: Int
+    pageInfo: PageInfo
+}
+
+
+type ModuleQuery {
+    listModules(after: ID = -1, first: Int = 25, searchText: String, seriesIds: [ID!] = [], moduleTypes: [ModuleType!] = [], milestoneIds: [ID!] = [], sortField: ListModuleSortField = MODULE_NAME, sortOrder: SortOrder = ASC): ModuleList!
+}
+
+
+
+type Query {
+    module: ModuleQuery
+}
+

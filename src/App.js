@@ -1,5 +1,5 @@
 import "./styles.css";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import Create from "./CreateTemplate";
 import response from "./response.json";
 import TableItemList from "./TableItemList";
@@ -9,6 +9,11 @@ import EllipsisTooltip from "@mindtickle/ellipsis-tooltip";
 import ModuleLabel from "./ModuleLabel";
 import Dropdown from "./Dropdown";
 import config from './config.json'
+import SelectWithSearch from '@mindtickle/select-with-search'
+import {injectIntl} from "react-intl";
+import {graphql, usePaginationFragment} from "react-relay";
+import SelectWithSearchPOC from "./SelectWithSearchPOC";
+
 
 export function getrule(curRule, ruleType) {
     if (curRule) {
@@ -61,7 +66,7 @@ export function getrule(curRule, ruleType) {
     }
 }
 
-export default function App() {
+function App(props) {
 
     const listOfComponentsToDisplay =
 
@@ -135,9 +140,16 @@ export default function App() {
 
     }
 
+
     return (
         <div className="App">
 
+            ...........................Picker......................................................
+
+            <SelectWithSearchPOC/>
+
+
+            <br/><br/><br/><br/><br/><br/>
             ...........................Table condition show......................................................
             <TableItemList contents={listOfComponentsToDisplay} moreItemConfig={moreItemConfig}/>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -162,3 +174,5 @@ export default function App() {
         </div>
     );
 }
+
+export default injectIntl(App);
